@@ -39,5 +39,20 @@ namespace AsyncAwaitSamples
                 return  complexCalc.DoComplexCalculation();
             });            
         }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            var complexCalc = new AsyncComplexCalculation();
+
+            var op1 = complexCalc.DoComplexCalculationAsync();
+            var op2 = complexCalc.DoComplexCalculationAsync();
+            var op3 = complexCalc.DoComplexCalculationAsync();
+            var op4 = complexCalc.DoComplexCalculationAsync();
+
+            await Task.WhenAll(op1, op2, op3, op4);
+
+            int sum = op1.Result + op2.Result + op3.Result + op4.Result;
+            MessageBox.Show(sum.ToString());
+        }
     }
 }
