@@ -54,5 +54,38 @@ namespace AsyncAwaitSamples
             int sum = op1.Result + op2.Result + op3.Result + op4.Result;
             MessageBox.Show(sum.ToString());
         }
+
+        private async void button3_Click(object sender, EventArgs e)
+        {
+            var complexCalc = new AsyncComplexCalculation();
+
+            Task<int> op1 = complexCalc.DoComplexCalculationAsync();
+            Task<int> op2 = complexCalc.DoComplexCalculationAsync();
+            Task<int> op3 = complexCalc.DoComplexCalculationAsync();
+            Task<int> op4 = complexCalc.DoComplexCalculationAsync();
+
+            await Task.WhenAll(op1, op2, op3, op4);
+
+            int sum = op1.Result + op2.Result + op3.Result + op4.Result;
+            MessageBox.Show(sum.ToString());
+        }
+
+        private async void button4_Click(object sender, EventArgs e)
+        {
+            var complexCalc = new AsyncComplexCalculation();
+
+            Task<int> op1 = complexCalc.DoComplexCalculationAsync();
+            Task<int> op2 = complexCalc.DoComplexCalculationAsync();
+            Task<int> op3 = complexCalc.DoComplexCalculationAsync();
+            Task<int> op4 = complexCalc.DoComplexCalculationAsync();
+
+            int a = await op1;
+            int b = await op2;
+            int c = await op3;
+            int d = await op4;
+
+            int sum = a + b + c + d;
+            MessageBox.Show(sum.ToString());
+        }
     }
 }
