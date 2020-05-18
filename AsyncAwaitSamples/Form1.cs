@@ -87,5 +87,43 @@ namespace AsyncAwaitSamples
             int sum = a + b + c + d;
             MessageBox.Show(sum.ToString());
         }
+
+        private async void button5_Click(object sender, EventArgs e)
+        {
+            var t1 = Task.Run(() =>
+            {
+                Task.Delay(8000);
+                MessageBox.Show("Inside Task");
+            });
+
+            await Task.WhenAll(t1);
+            MessageBox.Show("Outside Task");
+        }
+
+        private async void button6_Click(object sender, EventArgs e)
+        {
+            var t1 = DoSomeOpertation();
+            var t2 = DoSomeOpertation2();
+            await Task.WhenAll(t1, t2);
+            MessageBox.Show(t1.Result.ToString());
+        }
+
+        private Task<int> DoSomeOpertation()
+        {
+            return  Task.Run(() =>
+             {
+                 Task.Delay(3000);
+                 return 1;
+             });
+        }
+
+        private async Task<int> DoSomeOpertation2()
+        {
+            return await Task.Run(async () =>
+            {
+                await Task.Delay(3000);
+                return 1;
+            });
+        }
     }
 }
