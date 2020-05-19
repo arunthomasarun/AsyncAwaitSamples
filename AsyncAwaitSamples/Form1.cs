@@ -137,5 +137,52 @@ namespace AsyncAwaitSamples
                 return 1;
             });
         }
+
+        public int LeftOperand { get; set; }
+        public int RightOperand { get; set; }
+        public int TotalSum { get; set; }
+        private async void btnCalculate_Click(object sender, EventArgs e)
+        {
+            ClearControls();
+
+            var generator = new Random();
+
+            var left = UpdateLeft(generator);
+            var right = UpdateRight(generator);
+
+            await Task.WhenAll(left, right);
+            txtLeftOperand.Text = LeftOperand.ToString();
+            txtRightOperand.Text = RightOperand.ToString();
+
+            var total = UpdateTotal(generator);
+            await total;
+            txtResult.Text = TotalSum.ToString();
+        }
+
+        private void ClearControls()
+        {
+            txtLeftOperand.Text = string.Empty;
+            txtRightOperand.Text = string.Empty;
+            txtResult.Text = string.Empty;
+            Application.DoEvents();
+        }
+
+        private async Task UpdateLeft(Random generator)
+        {
+            await Task.Delay(generator.Next(0, 2000));
+            LeftOperand = generator.Next(-2000, 2000);
+        }
+
+        private async Task UpdateRight(Random generator)
+        {
+            await Task.Delay(generator.Next(0, 2000));
+            RightOperand = generator.Next(-2000, 2000);
+        }
+
+        private async Task UpdateTotal(Random generator)
+        {
+            await Task.Delay(generator.Next(0, 1000));
+            TotalSum = LeftOperand + RightOperand;
+        }
     }
 }
