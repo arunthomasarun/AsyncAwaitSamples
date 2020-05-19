@@ -104,7 +104,8 @@ namespace AsyncAwaitSamples
         {
             var t1 = DoSomeOpertation();
             var t2 = DoSomeOpertation2();
-            await Task.WhenAll(t1, t2);
+            var t3 = DoSomeOpertation3();
+            await Task.WhenAll(t1, t2, t3);
             MessageBox.Show(t1.Result.ToString());
         }
 
@@ -121,7 +122,18 @@ namespace AsyncAwaitSamples
         {
             return await Task.Run(async () =>
             {
-                await Task.Delay(3000);
+                await Task.Delay(5000);
+                MessageBox.Show("DoSomeOpertation2");
+                return 1;
+            });
+        }
+        
+        private async Task<int> DoSomeOpertation3()
+        {
+            return await Task.Run(async () =>
+            {
+                await Task.Delay(1000);
+                MessageBox.Show("DoSomeOpertation3");
                 return 1;
             });
         }
